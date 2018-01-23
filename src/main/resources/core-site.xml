@@ -1,0 +1,38 @@
+<configuration>
+
+    <property>
+        <name>fs.s3.impl</name>
+        <value>org.apache.hadoop.fs.s3a.S3AFileSystem</value>
+    </property>
+
+    <property>
+        <name>fs.s3a.buffer.dir</name>
+        <value>/tmp/fs3a-buffer</value>
+    </property>
+
+    <!--
+    Either provide access key and secret key properties here, or provide them
+    with the s3 url, e.g.
+
+    s3://accessKey:secretKey@bucketname/folder
+    -->
+
+    <!--
+    <property>
+        <name>fs.s3a.access.key</name>
+        <value>changeme</value>
+    </property>
+
+    <property>
+        <name>fs.s3a.secret.key</name>
+        <value>changeme</value>
+    </property>
+    -->
+
+    <property>
+        <name>fs.s3a.endpoint</name>
+        <value>s3-api.us-geo.objectstorage.softlayer.net</value>
+    </property>
+
+
+</configuration>
