@@ -64,3 +64,9 @@ ${FLINK_HOME}/bin/flink run target/todo-1.0-SNAPSHOT.jar --todo
 ## Run in IBM Analytics Engine (IAE)
 
 Todo
+
+## TIPS
+
+Avro tools are really useful for working with the generated data:
+ 
+ - http://www.michael-noll.com/blog/2013/03/17/reading-and-writing-avro-files-from-the-command-line/
