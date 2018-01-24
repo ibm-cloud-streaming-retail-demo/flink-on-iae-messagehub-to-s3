@@ -62,7 +62,13 @@ ${FLINK_HOME}/bin/start-local.sh
 Ensure you have built flink (`mvn clean package`).  You can then run with:
 
 ```
-${FLINK_HOME}/bin/flink run target/todo-1.0-SNAPSHOT.jar --todo
+${FLINK_HOME}/bin/flink run target/messagehub-to-s3-1.0-SNAPSHOT.jar \
+   --kafka-brokers broker1host:broker1port,broker2host:broker2port,... \
+   --kafka-topic transactions_load \
+   --kafka-username secret \
+   --kafka-password secret \
+   --kafka-group-id flink-job-123 \
+   --output-folder s3://accessKey:secretKey@bucket/folder
 ```
 
 ## Run in IBM Analytics Engine (IAE)

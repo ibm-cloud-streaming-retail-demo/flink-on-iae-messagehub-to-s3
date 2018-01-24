@@ -23,3 +23,5 @@ hs_err_pid*
 target/
 *.iml
 .idea/
+run_flink.sh
+run_flink_job.sh
