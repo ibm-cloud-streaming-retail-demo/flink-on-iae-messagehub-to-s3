@@ -14,6 +14,10 @@ An example event:
 
 ## Prerequisites
 
+### Message Hub data simulator deployed
+
+- https://github.com/ibm-cloud-streaming-retail-demo/kafka-producer-for-simulated-data
+
 ### IBM COS S3 endpoint with HMAC
 
 This example uses standard S3 authentication (this is called HMAC authentication - which is not enabled by default on IBM Cloud Object Storage).  To enable HMAC authentication:
