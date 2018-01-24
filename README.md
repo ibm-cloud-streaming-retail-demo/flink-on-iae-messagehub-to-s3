@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/ibm-cloud-streaming-retail-demo/flink-on-iae-messagehub-to-s3.svg?branch=master)](https://travis-ci.org/ibm-cloud-streaming-retail-demo/flink-on-iae-messagehub-to-s3)
+
+----
+
 ## Introduction
 
 This component retrieves a stream of events and persists them to S3 as avro.
