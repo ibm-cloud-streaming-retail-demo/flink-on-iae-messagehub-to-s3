@@ -14,7 +14,23 @@ An example event:
 
 ## Prerequisites
 
-IBM COS S3 endpoint with HMAC (todo instructions)
+### IBM COS S3 endpoint with HMAC
+
+This example uses standard S3 authentication (this is called HMAC authentication - which is not enabled by default on IBM Cloud Object Storage).  To enable HMAC authentication:
+
+- Log in to the IBM Cloud console and navigate to your instance of Object Storage.
+- In the side navigation, click Service Credentials.
+- Click New credential and provide the necessary information. If you want to generate HMAC credentials, specify the following in the Add Inline Configuration Parameters (Optional) field: `{"HMAC":true}`
+- Click Add to generate service credential.
+
+In the generated service credentials, you should see the standard S3 'access key id' and 'secret access key':
+
+```
+"cos_hmac_keys": {
+    "access_key_id": "XXXXX",
+    "secret_access_key": "XXXXX"
+  }
+```
 
 ## Building
 
