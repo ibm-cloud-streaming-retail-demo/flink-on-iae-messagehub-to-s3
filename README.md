@@ -69,6 +69,8 @@ To check for checkstyle violations as part of the build, you can uncomment the c
 
 ## Run Standalone
 
+WARNING: This is currently broken see - https://stackoverflow.com/questions/48420154/caused-by-java-lang-classcastexception-org-apache-hadoop-fs-s3a-s3afilesystem
+
 First start Flink (1.4+)
 
 ```
