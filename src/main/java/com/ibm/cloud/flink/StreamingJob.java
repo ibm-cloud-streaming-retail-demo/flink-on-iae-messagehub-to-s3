@@ -60,6 +60,11 @@ public class StreamingJob {
     private static final String PARAM_OUTPUT_FOLDER = "output-folder";
 
     /**
+     * The name of the parameter of the output file path.
+     */
+    private static final String PARAM_OUTPUT_BUCKET_FORMAT_STRING = "output-bucket-format-string";
+
+    /**
      * The time window slide amount.
      */
     private static final Time TIME_WINDOW_SLIDE = Time.minutes(1);
@@ -111,7 +116,7 @@ public class StreamingJob {
                     }
                 });
 
-        avroStream.addSink(getSink(pt.get(PARAM_OUTPUT_FOLDER), "yyyy-MM-dd--HHmm"));
+        avroStream.addSink(getSink(pt.get(PARAM_OUTPUT_FOLDER), pt.get(PARAM_OUTPUT_BUCKET_FORMAT_STRING)));
 
         // execute program
         env.execute("Streaming Analytics");
@@ -154,6 +159,7 @@ public class StreamingJob {
         // Use the parameter tool's 'Required' error reporting to notify if any of these params are missing
 
         pt.getRequired(PARAM_OUTPUT_FOLDER);
+        pt.getRequired(PARAM_OUTPUT_BUCKET_FORMAT_STRING);
 
         pt.getRequired(PARAM_KAFKA_TOPIC);
         pt.getRequired(PARAM_KAFKA_BROKERS);
