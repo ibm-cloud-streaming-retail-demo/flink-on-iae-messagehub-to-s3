@@ -14,6 +14,10 @@ An example event:
 
 ## Prerequisites
 
+### Message Hub data simulator deployed
+
+- https://github.com/ibm-cloud-streaming-retail-demo/kafka-producer-for-simulated-data
+
 ### IBM COS S3 endpoint with HMAC
 
 This example uses standard S3 authentication (this is called HMAC authentication - which is not enabled by default on IBM Cloud Object Storage).  To enable HMAC authentication:
@@ -69,27 +73,11 @@ To check for checkstyle violations as part of the build, you can uncomment the c
 
 ## Run Standalone
 
-First start Flink (1.4+)
-
-```
-${FLINK_HOME}/bin/start-local.sh
-```
-
-Ensure you have built flink (`mvn clean package`).  You can then run with:
-
-```
-${FLINK_HOME}/bin/flink run target/messagehub-to-s3-1.0-SNAPSHOT.jar \
-   --kafka-brokers broker1host:broker1port,broker2host:broker2port,... \
-   --kafka-topic transactions_load \
-   --kafka-username secret \
-   --kafka-password secret \
-   --kafka-group-id flink-job-123 \
-   --output-folder s3://accessKey:secretKey@bucket/folder
-```
+See [Standalone Deployment](./README_STANDALONE_DEPLOY.md)
 
 ## Run in IBM Analytics Engine (IAE)
 
-Todo
+See [IAE Deployment](./README_IAE_DEPLOY.md)
 
 ## TIPS
 
