@@ -73,25 +73,7 @@ To check for checkstyle violations as part of the build, you can uncomment the c
 
 ## Run Standalone
 
-WARNING: This is currently broken see - https://stackoverflow.com/questions/48420154/caused-by-java-lang-classcastexception-org-apache-hadoop-fs-s3a-s3afilesystem
-
-First start Flink (1.4+)
-
-```
-${FLINK_HOME}/bin/start-local.sh
-```
-
-Ensure you have built flink (`mvn clean package`).  You can then run with:
-
-```
-${FLINK_HOME}/bin/flink run target/messagehub-to-s3-1.0-SNAPSHOT.jar \
-   --kafka-brokers broker1host:broker1port,broker2host:broker2port,... \
-   --kafka-topic transactions_load \
-   --kafka-username secret \
-   --kafka-password secret \
-   --kafka-group-id flink-job-123 \
-   --output-folder s3://accessKey:secretKey@bucket/folder
-```
+See [Standalone Deployment](./README_STANDALONE_DEPLOY.md)
 
 ## Run in IBM Analytics Engine (IAE)
 
