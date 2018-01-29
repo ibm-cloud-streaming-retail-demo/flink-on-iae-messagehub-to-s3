@@ -153,7 +153,7 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
     # View the Flink session running on yarn
     yarn application -list
 
-### Deploy Flink job
+### Deploy Flink job - yarn session
 
     export HADOOP_CONF_DIR=/etc/hadoop/conf
 
@@ -166,7 +166,22 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
       --kafka-username ${KAFKA_USERNAME} \
       --kafka-password ${KAFKA_PASSWORD} \
       --kafka-group-id ${KAFKA_GROUP_ID} \
-      --output-folder s3://${S3_BUCKET}/${S3_FOLDER}
+      --output-folder s3://${S3_BUCKET}/${S3_FOLDER} \
+      --output-bucket-format-string "yyyy-MM-dd--HHmm"
+
+    # Verify the output
+    hadoop fs -ls cos://${S3_BUCKET}.${S3_SERVICENAME}/${S3_FOLDER}
+
+### Deploy Flink job - yarn single job
+
+    ${FLINK_HOME}/bin/flink run -m yarn-cluster -yn 2 /home/clsadmin/messagehub-to-s3-1.0-SNAPSHOT.jar \
+      --kafka-brokers ${KAFKA_BROKERS} \
+      --kafka-topic ${KAFKA_TOPIC} \
+      --kafka-username ${KAFKA_USERNAME} \
+      --kafka-password ${KAFKA_PASSWORD} \
+      --kafka-group-id ${KAFKA_GROUP_ID} \
+      --output-folder s3://${S3_BUCKET}/${S3_FOLDER} \
+      --output-bucket-format-string "yyyy-MM-dd--HHmm"
 
     # Verify the output
     hadoop fs -ls cos://${S3_BUCKET}.${S3_SERVICENAME}/${S3_FOLDER}
