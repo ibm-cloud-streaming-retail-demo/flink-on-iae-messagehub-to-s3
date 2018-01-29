@@ -167,7 +167,7 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
 
     export HADOOP_CONF_DIR=/etc/hadoop/conf
 
-    ${FLINK_HOME}/bin/flink run -m yarn-cluster -yn 2 /home/clsadmin/messagehub-to-s3-1.0-SNAPSHOT.jar \
+    ${FLINK_HOME}/bin/flink run -m yarn-cluster -yn 2 -yd /home/clsadmin/messagehub-to-s3-1.0-SNAPSHOT.jar \
       --kafka-brokers ${KAFKA_BROKERS} \
       --kafka-topic ${KAFKA_TOPIC} \
       --kafka-username ${KAFKA_USERNAME} \
