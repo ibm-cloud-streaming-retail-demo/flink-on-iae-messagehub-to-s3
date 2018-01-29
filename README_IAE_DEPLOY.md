@@ -76,26 +76,26 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
     ### Set custom variables ###
     ############################
 
-    S3_ACCESS_KEY=your-access-key
-    S3_SECRET_KEY=your-secret-key
-    S3_ENDPOINT=your-endpoint
-    S3_BUCKET=your-bucket
-    S3_FOLDER=your-folder
+    export S3_ACCESS_KEY=your-access-key
+    export S3_SECRET_KEY=your-secret-key
+    export S3_ENDPOINT=your-endpoint
+    export S3_BUCKET=your-bucket
+    export S3_FOLDER=your-folder
     
     # your-servicename as configured in IAE Ambari
-    S3_SERVICENAME=your-servicename
+    export S3_SERVICENAME=your-servicename
     
     # Format host1:port1,host2:port2,...,hostN:portN
-    KAFKA_BROKERS=your-brokers
+    export KAFKA_BROKERS=your-brokers
     
-    KAFKA_TOPIC=transactions_load
-    KAFKA_USERNAME=your-kafka-username
-    KAFKA_PASSWORD=your-kafka-password
-    KAFKA_GROUP_ID=kafka-flink-iae-streaming-demo
+    export KAFKA_TOPIC=transactions_load
+    export KAFKA_USERNAME=your-kafka-username
+    export KAFKA_PASSWORD=your-kafka-password
+    export KAFKA_GROUP_ID=kafka-flink-iae-streaming-demo
     
-    FLINK_HOME=flink-1.4.0
-    FLINK_LIB=$FLINK_HOME/lib/
-    FLINK_CONF=$FLINK_HOME/conf/flink-conf.yaml
+    export FLINK_HOME=flink-1.4.0
+    export FLINK_LIB=$FLINK_HOME/lib/
+    export FLINK_CONF=$FLINK_HOME/conf/flink-conf.yaml
 
 ### Install Flink
 
