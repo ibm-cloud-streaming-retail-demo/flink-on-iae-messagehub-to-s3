@@ -36,14 +36,6 @@ In the generated service credentials, you should see the standard S3 'access key
   }
 ```
 
-## Building
-
-To build this component, use:
-
-```
-mvn clean package
-```
-
 ## Developing
 
 To import this project into eclipse:
