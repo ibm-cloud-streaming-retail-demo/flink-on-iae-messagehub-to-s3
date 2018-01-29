@@ -92,6 +92,10 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
     KAFKA_USERNAME=your-kafka-username
     KAFKA_PASSWORD=your-kafka-password
     KAFKA_GROUP_ID=kafka-flink-iae-streaming-demo
+    
+    FLINK_HOME=flink-1.4.0
+    FLINK_LIB=$FLINK_HOME/lib/
+    FLINK_CONF=$FLINK_HOME/conf/flink-conf.yaml
 
 ### Install Flink
 
@@ -110,11 +114,7 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
     
     # Extract clean installation
     tar xf flink-1.4.0-hadoop27-scala_2.11.tgz
-    
-    FLINK_HOME=flink-1.4.0
-    FLINK_LIB=$FLINK_HOME/lib/
-    FLINK_CONF=$FLINK_HOME/conf/flink-conf.yaml
-    
+  
     ######################
     ### Setup Flink S3 ###
     ######################
