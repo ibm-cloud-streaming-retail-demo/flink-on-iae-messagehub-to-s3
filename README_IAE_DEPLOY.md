@@ -139,7 +139,7 @@ For more information, see: https://ci.apache.org/projects/flink/flink-docs-relea
     # For more information, on running flink on yarn, 
     # see: https://ci.apache.org/projects/flink/flink-docs-release-1.4/ops/deployment/yarn_setup.html
        
-    ${FLINK_HOME}/bin/flink run target/messagehub-to-s3-1.0-SNAPSHOT.jar \
+    ${FLINK_HOME}/bin/flink run /home/clsadmin/messagehub-to-s3-1.0-SNAPSHOT.jar \
       --kafka-brokers ${KAFKA_BROKERS} \
       --kafka-topic ${KAFKA_TOPIC} \
       --kafka-username ${KAFKA_USERNAME} \
