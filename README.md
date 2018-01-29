@@ -68,7 +68,7 @@ To check for checkstyle violations as part of the build, you can uncomment the c
 
 See [Standalone Deployment](./README_STANDALONE_DEPLOY.md)
 
-## Run in IBM Analytics Engine (IAE)
+## Run on IBM Analytics Engine (IAE)
 
 See [IAE Deployment](./README_IAE_DEPLOY.md)
 
