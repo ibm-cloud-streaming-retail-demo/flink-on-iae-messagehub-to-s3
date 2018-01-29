@@ -65,16 +65,6 @@ public class StreamingJob {
     private static final String PARAM_OUTPUT_BUCKET_FORMAT_STRING = "output-bucket-format-string";
 
     /**
-     * The time window slide amount.
-     */
-    private static final Time TIME_WINDOW_SLIDE = Time.minutes(1);
-
-    /**
-     * The size of the time window.
-     */
-    private static final Time TIME_WINDOW_SIZE = Time.minutes(10);
-
-    /**
      * The <code>org.apache.log4j.logger</code>.
      */
     private static Logger log = Logger.getLogger(StreamingJob.class);
