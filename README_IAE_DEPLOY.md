@@ -125,27 +125,6 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
     
     rm -f flink-1.4.0/lib/flink-shaded-hadoop2-uber-1.4.0.jar
     
-    # Add S3 hadoop driver
-    #cp -f flink-1.4.0/opt/flink-s3-fs-hadoop-1.4.0.jar $FLINK_LIB
-    
-    # Add hadoop dependencies
-    #cp -f /usr/hdp/2.6.2.0-205/hadoop/hadoop-aws.jar $FLINK_LIB
-    #cp -f /usr/hdp/2.6.2.0-205/hadoop/lib/aws-java-sdk-s3-1.10.6.jar $FLINK_LIB
-    #cp -f /usr/hdp/2.6.2.0-205/hadoop/lib/aws-java-sdk-core-1.10.6.jar $FLINK_LIB
-    #cp -f /usr/hdp/2.6.2.0-205/hadoop/lib/aws-java-sdk-kms-1.10.6.jar $FLINK_LIB
-    #cp -f /usr/hdp/2.6.2.0-205/hadoop/lib/jackson-annotations-2.2.3.jar $FLINK_LIB
-    #cp -f /usr/hdp/2.6.2.0-205/hadoop/lib/jackson-core-2.2.3.jar $FLINK_LIB
-    #cp -f /usr/hdp/2.6.2.0-205/hadoop/lib/jackson-databind-2.2.3.jar $FLINK_LIB
-    #cp -f /usr/hdp/2.6.2.0-205/hadoop/lib/joda-time-2.9.4.jar $FLINK_LIB
-    #cp -f /usr/hdp/2.6.2.0-205/hadoop/lib/httpcore-4.4.4.jar $FLINK_LIB
-    #cp -f /usr/hdp/2.6.2.0-205/hadoop/lib/httpclient-4.5.2.jar $FLINK_LIB
-    
-    #echo 'fs.hdfs.hadoopconf:  /etc/hadoop/conf' >> $FLINK_CONF
-    
-    #echo "s3.access-key: ${S3_ACCESS_KEY}" >> $FLINK_CONF
-    #echo "s3.secret-key: ${S3_SECRET_KEY}" >> $FLINK_CONF
-    #echo "s3.endpoint: ${S3_ENDPOINT}" >> $FLINK_CONF
-    
     ### Start Flink session
 
     # For more information, see: https://ci.apache.org/projects/flink/flink-docs-release-1.4/ops/deployment/yarn_setup.html
