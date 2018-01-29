@@ -36,7 +36,7 @@ These instructions are taken from the [IAE docs](https://console.bluemix.net/doc
  - Ambari dashboard > HDFS > Configs > Advanced > Custom core-site > Add Property
  - Add the properties and values.
  
- Note that the value for <servicename> can be any literal such as awsservice or myobjectstore.
+ Note that the value for <servicename> can be any literal such as `myobjectstore`.
 
 ```
 fs.cos.<servicename>.access.key=<Access Key ID>
