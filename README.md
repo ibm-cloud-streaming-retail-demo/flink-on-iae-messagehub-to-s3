@@ -95,7 +95,7 @@ ${FLINK_HOME}/bin/flink run target/messagehub-to-s3-1.0-SNAPSHOT.jar \
 
 ## Run in IBM Analytics Engine (IAE)
 
-TODO - adapt from https://github.com/snowch-notes/ibm-analytics-engine/blob/master/flink_on_yarn_wordcount_cos.md
+See [IAE Deployment](./README_IAE_DEPLOY.md)
 
 ## TIPS
 
