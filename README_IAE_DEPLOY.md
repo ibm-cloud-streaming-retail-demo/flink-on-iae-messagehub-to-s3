@@ -87,12 +87,12 @@ fs.s3a.endpoint=<EndPoint URL>
 
 ### Setup Flink
 
-    # Download Flink - IAE as of 2018-01-29 is based on hadoop 2.6
-    wget -c -O flink-1.4.0-hadoop26-scala_2.11.tgz \
+    # Download Flink - IAE as of 2018-01-29 is based on hadoop 2.7
+    wget -c -O flink-1.4.0-hadoop27-scala_2.11.tgz \
       "http://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=flink/flink-1.4.0/flink-1.4.0-bin-hadoop27-scala_2.11.tgz"
 
     # Extract
-    tar xf flink-1.4.0-hadoop26-scala_2.11.tgz
+    tar xf flink-1.4.0-hadoop27-scala_2.11.tgz
     
     FLINK_HOME=flink-1.4.0
     FLINK_LIB=$FLINK_HOME/lib/
