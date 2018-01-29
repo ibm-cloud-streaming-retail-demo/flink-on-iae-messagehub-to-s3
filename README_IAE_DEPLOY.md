@@ -68,6 +68,10 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
 
     ssh clsadmin@your-cluster-name
     
+### Set variables
+
+    # Create a file vars.sh
+
     ############################
     ### Set custom variables ###
     ############################
@@ -88,6 +92,8 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
     KAFKA_USERNAME=your-kafka-username
     KAFKA_PASSWORD=your-kafka-password
     KAFKA_GROUP_ID=kafka-flink-iae-streaming-demo
+
+### Install Flink
 
     #####################
     ### Install Flink ###
@@ -155,6 +161,8 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
 
 ### Deploy Flink job - yarn session
 
+    source vars.sh
+
     export HADOOP_CONF_DIR=/etc/hadoop/conf
 
     # For more information, on running flink on yarn, 
@@ -176,6 +184,10 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
     hadoop fs -ls cos://${S3_BUCKET}.${S3_SERVICENAME}/${S3_FOLDER}
 
 ### Deploy Flink job - yarn single job
+
+    source vars.sh
+
+    export HADOOP_CONF_DIR=/etc/hadoop/conf
 
     ${FLINK_HOME}/bin/flink run -m yarn-cluster -yn 2 /home/clsadmin/messagehub-to-s3-1.0-SNAPSHOT.jar \
       --kafka-brokers ${KAFKA_BROKERS} \
