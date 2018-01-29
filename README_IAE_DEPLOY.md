@@ -148,9 +148,6 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
 
     # For more information, on running flink on yarn, 
     # see: https://ci.apache.org/projects/flink/flink-docs-release-1.4/ops/deployment/yarn_setup.html
-    
-    # TODO should we deploy as flink session or standalone with -m yarn-cluster?
-    # ${FLINK_HOME}/bin/flink run -yd -m yarn-cluster -yn 2 /home/clsadmin/messagehub-to-s3-1.0-SNAPSHOT.jar ...
        
     ${FLINK_HOME}/bin/flink run /home/clsadmin/messagehub-to-s3-1.0-SNAPSHOT.jar \
       --kafka-brokers ${KAFKA_BROKERS} \
@@ -181,3 +178,8 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
 
     # Verify the output
     hadoop fs -ls cos://${S3_BUCKET}.${S3_SERVICENAME}/${S3_FOLDER}
+    
+    
+### Yarn session or cluster?
+
+Should we deploy as flink session or standalone with yarn-cluster? What are the differences?
