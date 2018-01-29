@@ -82,6 +82,8 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
     export S3_BUCKET=your-bucket
     export S3_FOLDER=your-folder
     
+    export S3_BUCKET_FORMAT_STRING="yyyy-MM-dd--HHmm"
+    
     # your-servicename as configured in IAE Ambari
     export S3_SERVICENAME=your-servicename
     
@@ -178,7 +180,7 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
       --kafka-password ${KAFKA_PASSWORD} \
       --kafka-group-id ${KAFKA_GROUP_ID} \
       --output-folder s3://${S3_BUCKET}/${S3_FOLDER} \
-      --output-bucket-format-string "yyyy-MM-dd--HHmm"
+      --output-bucket-format-string ${S3_BUCKET_FORMAT_STRING}
 
     # Verify the output
     hadoop fs -ls cos://${S3_BUCKET}.${S3_SERVICENAME}/${S3_FOLDER}
@@ -196,7 +198,7 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
       --kafka-password ${KAFKA_PASSWORD} \
       --kafka-group-id ${KAFKA_GROUP_ID} \
       --output-folder s3://${S3_BUCKET}/${S3_FOLDER} \
-      --output-bucket-format-string "yyyy-MM-dd--HHmm"
+      --output-bucket-format-string ${S3_BUCKET_FORMAT_STRING}
 
     # Verify the output
     hadoop fs -ls cos://${S3_BUCKET}.${S3_SERVICENAME}/${S3_FOLDER}
