@@ -61,6 +61,7 @@ You can run the StreamingJob from eclipse.  You need to edit the Run Configurati
 --kafka-password secret
 --kafka-group-id flink-job-123
 --output-folder s3://accessKey:secretKey@bucket/folder
+--output-bucket-format-string "yyyy-MM-dd--HHmm"
 ```
 
 Edit the src/main/resources/core-site.xml to provide the S3 endpoint address.

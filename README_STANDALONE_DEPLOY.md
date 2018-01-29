@@ -91,4 +91,5 @@ Use the following steps to create a service credential:
       --kafka-username ${KAFKA_USERNAME} \
       --kafka-password ${KAFKA_PASSWORD} \
       --kafka-group-id ${KAFKA_GROUP_ID} \
-      --output-folder s3://${S3_BUCKET}/${S3_FOLDER}
+      --output-folder s3://${S3_BUCKET}/${S3_FOLDER} \
+      --output-bucket-format-string "yyyy-MM-dd--HHmm"
