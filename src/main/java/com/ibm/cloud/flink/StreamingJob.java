@@ -168,7 +168,33 @@ public class StreamingJob {
 
         Map<String, String> properties = new HashMap<>();
         Schema keySchema = Schema.create(Schema.Type.STRING);
-        Schema valueSchema = Schema.create(Schema.Type.STRING);
+
+        // TODO
+        // It would be more flexible for the schema to be hosted, for example at a https url
+        // and this application download the schema.  This would be parameterised so the schema
+        // url would be passed to this application as a parameter.
+
+        String valueSchema = "\n" +
+                "        {\"namespace\": \"transaction.avro\",\n" +
+                "         \"type\": \"record\",\n" +
+                "         \"name\": \"Transaction\",\n" +
+                "         \"fields\": [\n" +
+                "             {\"name\": \"InvoiceNo\",     \"type\": \"int\"    },\n" +
+                "             {\"name\": \"StockCode\",     \"type\": \"string\" },\n" +
+                "             {\"name\": \"Description\",   \"type\": \"string\" },\n" +
+                "             {\"name\": \"Quantity\",      \"type\": \"int\"    },\n" +
+                "             {\"name\": \"InvoiceDate\",   \"type\": \"long\"   },\n" +
+                "             {\"name\": \"UnitPrice\",     \"type\": \"float\"  },\n" +
+                "             {\"name\": \"CustomerID\",    \"type\": \"int\"    },\n" +
+                "             {\"name\": \"Country\",       \"type\": \"string\" },\n" +
+                "             {\"name\": \"LineNo\",        \"type\": \"int\"    },\n" +
+                "             {\"name\": \"InvoiceTime\",   \"type\": \"string\" },\n" +
+                "             {\"name\": \"StoreID\",       \"type\": \"int\"    },\n" +
+                "             {\"name\": \"TransactionID\", \"type\": \"string\" }\n" +
+                "         ]\n" +
+                "        }";
+
+
         properties.put(AvroKeyValueSinkWriter.CONF_OUTPUT_KEY_SCHEMA, keySchema.toString());
         properties.put(AvroKeyValueSinkWriter.CONF_OUTPUT_VALUE_SCHEMA, valueSchema.toString());
         properties.put(AvroKeyValueSinkWriter.CONF_COMPRESS, String.valueOf(true));
