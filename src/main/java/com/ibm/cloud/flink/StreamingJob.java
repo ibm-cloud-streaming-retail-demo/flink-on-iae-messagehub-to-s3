@@ -2,8 +2,6 @@ package com.ibm.cloud.flink;
 
 import org.apache.avro.Schema;
 import org.apache.avro.file.DataFileConstants;
-import org.apache.avro.generic.GenericData;
-import org.apache.avro.generic.GenericRecord;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.api.java.utils.ParameterTool;
@@ -102,20 +100,7 @@ public class StreamingJob {
 
                         JsonNode result = value.get("value");
 
-                        Transaction tx = Transaction.newBuilder()
-                                .setInvoiceNo(result.get("InvoiceNo").intValue())
-                                .setStockCode(result.get("StockCode").intValue())
-                                .setDescription(result.get("Description").toString())
-                                .setQuantity(result.get("Quantity").intValue())
-                                .setInvoiceDate(result.get("InvoiceDate").longValue())
-                                .setUnitPrice(result.get("UnitPrice").floatValue())
-                                .setCustomerID(result.get("CustomerID").intValue())
-                                .setCountry(result.get("Country").toString())
-                                .setLineNo(result.get("LineNo").intValue())
-                                .setInvoiceTime(result.get("InvoiceTime").toString())
-                                .setStoreID(result.get("StoreID").intValue())
-                                .setTransactionID(result.get("TransactionID").toString())
-                                .build();
+                        Transaction tx = convertToAvro(result);
 
                         return new Tuple2(value.get("key").toString(), tx);
                     }
@@ -125,6 +110,23 @@ public class StreamingJob {
 
         // execute program
         env.execute("Streaming Analytics");
+    }
+
+    public static Transaction convertToAvro(JsonNode result) {
+        return Transaction.newBuilder()
+                                    .setInvoiceNo(result.get("InvoiceNo").intValue())
+                                    .setStockCode(result.get("StockCode").intValue())
+                                    .setDescription(result.get("Description").toString())
+                                    .setQuantity(result.get("Quantity").intValue())
+                                    .setInvoiceDate(result.get("InvoiceDate").longValue())
+                                    .setUnitPrice(result.get("UnitPrice").floatValue())
+                                    .setCustomerID(result.get("CustomerID").intValue())
+                                    .setCountry(result.get("Country").toString())
+                                    .setLineNo(result.get("LineNo").intValue())
+                                    .setInvoiceTime(result.get("InvoiceTime").toString())
+                                    .setStoreID(result.get("StoreID").intValue())
+                                    .setTransactionID(result.get("TransactionID").toString())
+                                    .build();
     }
 
     private static FlinkKafkaConsumer011 getKafkaConsumer(final ParameterTool pt) {

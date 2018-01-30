@@ -1,26 +1,16 @@
 package com.ibm.cloud.flink;
 
 import static com.ibm.cloud.flink.StreamingJob.*;
-import static org.junit.Assert.assertEquals;
 
-import org.apache.avro.Schema;
-import org.apache.avro.generic.GenericData;
-import org.apache.avro.generic.GenericRecord;
-//import org.apache.avro.util.internal.JacksonUtils;
 import org.apache.flink.api.java.tuple.Tuple2;
-import org.apache.flink.api.java.typeutils.AvroUtils;
 import org.apache.flink.streaming.connectors.fs.AvroKeyValueSinkWriter;
-
 import java.io.File;
-import java.util.LinkedHashMap;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.JsonNode;
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.*;
-import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 /**
@@ -85,20 +75,7 @@ public class StreamingJobTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode result = mapper.readTree(value);
 
-        Transaction tx = Transaction.newBuilder()
-                .setInvoiceNo(result.get("InvoiceNo").getIntValue())
-                .setStockCode(result.get("StockCode").getIntValue())
-                .setDescription(result.get("Description").toString())
-                .setQuantity(result.get("Quantity").getIntValue())
-                .setInvoiceDate(result.get("InvoiceDate").getLongValue())
-                .setUnitPrice((float)result.get("UnitPrice").getDoubleValue())
-                .setCustomerID(result.get("CustomerID").getIntValue())
-                .setCountry(result.get("Country").toString())
-                .setLineNo(result.get("LineNo").getIntValue())
-                .setInvoiceTime(result.get("InvoiceTime").toString())
-                .setStoreID(result.get("StoreID").getIntValue())
-                .setTransactionID(result.get("TransactionID").toString())
-                .build();
+        Transaction tx = StreamingJob.convertToAvro(result);
 
         writer.setSyncOnFlush(true);
         writer.open(fs, path);
