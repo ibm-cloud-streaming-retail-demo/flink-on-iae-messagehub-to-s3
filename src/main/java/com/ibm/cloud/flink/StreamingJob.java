@@ -2,27 +2,26 @@ package com.ibm.cloud.flink;
 
 import org.apache.avro.Schema;
 import org.apache.avro.file.DataFileConstants;
+import org.apache.avro.generic.GenericData;
+import org.apache.avro.generic.GenericRecord;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.api.java.utils.ParameterTool;
-import org.apache.flink.configuration.Configuration;
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.flink.streaming.api.CheckpointingMode;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.sink.SinkFunction;
-import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.connectors.fs.AvroKeyValueSinkWriter;
 import org.apache.flink.streaming.connectors.fs.bucketing.BucketingSink;
 import org.apache.flink.streaming.connectors.fs.bucketing.DateTimeBucketer;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer011;
 import org.apache.flink.streaming.util.serialization.JSONKeyValueDeserializationSchema;
 import org.apache.log4j.Logger;
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.JsonNode;
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.node.ObjectNode;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 
 //CHECKSTYLE.OFF: HideUtilityClassConstructor
@@ -95,14 +94,30 @@ public class StreamingJob {
 
         //objStream.print(); // 1> {"key":5639281840180123,"value":{"InvoiceNo":5639281,"StockCode":"47593B","Description":"SCOTTIE DOGS BABY BIB","Quantity":4,"InvoiceDate":1516724220000,"UnitPrice":0.39,"CustomerID":17059,"Country":"United Kingdom","LineNo":84,"InvoiceTime":"16:17:00","StoreID":0,"TransactionID":"5639281840180123"}}
 
-        DataStream<Tuple2<String, String>> avroStream = objStream
-                .map(new MapFunction<ObjectNode, Tuple2<String, String>>() {
+        DataStream<Tuple2<String, Object>> avroStream = objStream
+                .map(new MapFunction<ObjectNode, Tuple2<String, Object>>() {
+
                     @Override
-                    public Tuple2<String, String> map(ObjectNode value) throws Exception {
-                        return new Tuple2(
-                                value.get("key").toString(),
-                                value.get("value").toString()
-                        );
+                    public Tuple2<String, Object> map(ObjectNode value) throws Exception {
+
+                        JsonNode result = value.get("value");
+
+                        Transaction tx = Transaction.newBuilder()
+                                .setInvoiceNo(result.get("InvoiceNo").intValue())
+                                .setStockCode(result.get("StockCode").intValue())
+                                .setDescription(result.get("Description").toString())
+                                .setQuantity(result.get("Quantity").intValue())
+                                .setInvoiceDate(result.get("InvoiceDate").longValue())
+                                .setUnitPrice(result.get("UnitPrice").floatValue())
+                                .setCustomerID(result.get("CustomerID").intValue())
+                                .setCountry(result.get("Country").toString())
+                                .setLineNo(result.get("LineNo").intValue())
+                                .setInvoiceTime(result.get("InvoiceTime").toString())
+                                .setStoreID(result.get("StoreID").intValue())
+                                .setTransactionID(result.get("TransactionID").toString())
+                                .build();;
+
+                        return new Tuple2(value.get("key").toString(), tx);
                     }
                 });
 
@@ -164,23 +179,26 @@ public class StreamingJob {
      * @param formatString The formatString for the <code>DateTimeBucketer</code>
      * @return the <code>BucketingSink</code>
      */
-    private static SinkFunction<Tuple2<String, String>> getSink(final String path, final String formatString) {
+    private static SinkFunction<Tuple2<String, Object>> getSink(final String path, final String formatString) {
 
-        Map<String, String> properties = new HashMap<>();
-        Schema keySchema = Schema.create(Schema.Type.STRING);
+        AvroKeyValueSinkWriter<String, Object> writer = getWriter();
 
-        // TODO
-        // It would be more flexible for the schema to be hosted, for example at a https url
-        // and this application download the schema.  This would be parameterised so the schema
-        // url would be passed to this application as a parameter.
+        return new BucketingSink<Tuple2<String, Object>>(path)
+                 .setWriter(writer)
+                 .setBucketer(new DateTimeBucketer<Tuple2<String, Object>>(formatString));
+    }
 
-        String valueSchema = "\n" +
-                "        {\"namespace\": \"transaction.avro\",\n" +
+    public static Schema makeSchema() {
+
+        // TODO read from src/main/avro/transaction.avsc
+
+        String valSchemaJson = "\n" +
+                "        {\"namespace\": \"transaction.avsc\",\n" +
                 "         \"type\": \"record\",\n" +
                 "         \"name\": \"Transaction\",\n" +
                 "         \"fields\": [\n" +
                 "             {\"name\": \"InvoiceNo\",     \"type\": \"int\"    },\n" +
-                "             {\"name\": \"StockCode\",     \"type\": \"string\" },\n" +
+                "             {\"name\": \"StockCode\",     \"type\": \"int\" },\n" +
                 "             {\"name\": \"Description\",   \"type\": \"string\" },\n" +
                 "             {\"name\": \"Quantity\",      \"type\": \"int\"    },\n" +
                 "             {\"name\": \"InvoiceDate\",   \"type\": \"long\"   },\n" +
@@ -194,17 +212,26 @@ public class StreamingJob {
                 "         ]\n" +
                 "        }";
 
+        Schema.Parser parser = new Schema.Parser();
+        return parser.parse(valSchemaJson);
+    }
 
+    /**
+     *
+     * @return a <code>AvroKeyValueSinkWriter</code>
+     */
+    protected static AvroKeyValueSinkWriter<String, Object> getWriter() {
+
+        Schema keySchema = Schema.create(Schema.Type.STRING);
+        Schema valSchema = makeSchema();
+
+        Map<String, String> properties = new HashMap<>();
         properties.put(AvroKeyValueSinkWriter.CONF_OUTPUT_KEY_SCHEMA, keySchema.toString());
-        properties.put(AvroKeyValueSinkWriter.CONF_OUTPUT_VALUE_SCHEMA, valueSchema.toString());
+        properties.put(AvroKeyValueSinkWriter.CONF_OUTPUT_VALUE_SCHEMA, valSchema.toString());
         properties.put(AvroKeyValueSinkWriter.CONF_COMPRESS, String.valueOf(true));
         properties.put(AvroKeyValueSinkWriter.CONF_COMPRESS_CODEC, DataFileConstants.SNAPPY_CODEC);
 
-        AvroKeyValueSinkWriter<String, String> writer = new AvroKeyValueSinkWriter(properties);
-
-        return new BucketingSink<Tuple2<String, String>>(path)
-                 .setWriter(writer)
-                 .setBucketer(new DateTimeBucketer<Tuple2<String, String>>(formatString));
+        return new AvroKeyValueSinkWriter<String, Object>(properties);
     }
 
 }

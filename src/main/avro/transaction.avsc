@@ -1,0 +1,20 @@
+{
+ "namespace": "com.ibm.cloud.flink",
+ "type": "record",
+ "doc": "An invoice line item transaction",
+ "name": "com.ibm.cloud.flink.Transaction",
+ "fields": [
+     {"name": "InvoiceNo",     "type": "int"    },
+     {"name": "StockCode",     "type": "int"    },
+     {"name": "Description",   "type": "string" },
+     {"name": "Quantity",      "type": "int"    },
+     {"name": "InvoiceDate",   "type": "long"   },
+     {"name": "UnitPrice",     "type": "float"  },
+     {"name": "CustomerID",    "type": "int"    },
+     {"name": "Country",       "type": "string" },
+     {"name": "LineNo",        "type": "int"    },
+     {"name": "InvoiceTime",   "type": "string" },
+     {"name": "StoreID",       "type": "int"    },
+     {"name": "TransactionID", "type": "string" }
+ ]
+}
