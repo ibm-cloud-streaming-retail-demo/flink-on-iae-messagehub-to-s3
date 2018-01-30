@@ -121,8 +121,9 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
     ### Setup Flink S3 ###
     ######################
     
-    # For more information, see: https://ci.apache.org/projects/flink/flink-docs-release-1.4/ops/deployment/aws.html
+    # For more information on Flink and Yarn, see: https://ci.apache.org/projects/flink/flink-docs-release-1.4/ops/deployment/aws.html
     
+    # Is this ok? https://stackoverflow.com/questions/48505970/flink-on-yarn-could-not-initialize-class-org-apache-hadoop-fs-s3a-s3afilesyste
     rm -f flink-1.4.0/lib/flink-shaded-hadoop2-uber-1.4.0.jar
     
     ### Start Flink session
