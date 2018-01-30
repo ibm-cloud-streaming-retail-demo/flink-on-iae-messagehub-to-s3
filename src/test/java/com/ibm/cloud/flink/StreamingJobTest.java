@@ -72,49 +72,37 @@ public class StreamingJobTest {
         dataDir.delete();
     }
 
-// FIXME enable this test
-//    @Test
-//    public void testSchema() throws Exception {
-//        ObjectMapper mapper = new ObjectMapper();
-//        JsonNode jsonObj = mapper.readTree(value);
-//        JacksonUtils.toObject(jsonObj, StreamingJob.makeSchema());
-//    }
+    /**
+     * For now, just test that we don't throw an exception
+     *
+     * @throws Exception ex
+     */
+    @Test(expected = Test.None.class) // Don't expect an exception
+    public void testWriter() throws Exception {
 
+        AvroKeyValueSinkWriter<String, Object> writer = getWriter();
 
-// FIXME enable this test
-//    /**
-//     * For now, just test that we don't throw an exception
-//     *
-//     * @throws Exception ex
-//     */
-//    @Test(expected = Test.None.class) // Don't expect an exception
-//    public void testWriter() throws Exception {
-//
-//        AvroKeyValueSinkWriter<String, Object> writer = getWriter();
-//
-//        ObjectMapper mapper = new ObjectMapper();
-//        JsonNode jsonObj = mapper.readTree(value);
-//
-//        LinkedHashMap result = (LinkedHashMap)JacksonUtils.toObject(jsonObj, StreamingJob.makeSchema());
-//
-//        GenericRecord gr = new GenericData.Record(StreamingJob.makeSchema());
-//
-//        gr.put("InvoiceNo",     result.get("InvoiceNo"));
-//        gr.put("StockCode",     result.get("StockCode"));
-//        gr.put("Description",   result.get("Description"));
-//        gr.put("Quantity",      result.get("Quantity"));
-//        gr.put("InvoiceDate",   result.get("InvoiceDate"));
-//        gr.put("UnitPrice",     result.get("UnitPrice"));
-//        gr.put("CustomerID",    result.get("CustomerID"));
-//        gr.put("Country",       result.get("Country"));
-//        gr.put("LineNo",        result.get("LineNo"));
-//        gr.put("InvoiceTime",   result.get("InvoiceTime"));
-//        gr.put("StoreID",       result.get("StoreID"));
-//        gr.put("TransactionID", result.get("TransactionID"));
-//
-//        writer.setSyncOnFlush(true);
-//        writer.open(fs, path);
-//        writer.write(new Tuple2<String, Object>(key, gr));
-//        writer.flush();
-//    }
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode result = mapper.readTree(value);
+
+        Transaction tx = Transaction.newBuilder()
+                .setInvoiceNo(result.get("InvoiceNo").getIntValue())
+                .setStockCode(result.get("StockCode").getIntValue())
+                .setDescription(result.get("Description").toString())
+                .setQuantity(result.get("Quantity").getIntValue())
+                .setInvoiceDate(result.get("InvoiceDate").getLongValue())
+                .setUnitPrice((float)result.get("UnitPrice").getDoubleValue())
+                .setCustomerID(result.get("CustomerID").getIntValue())
+                .setCountry(result.get("Country").toString())
+                .setLineNo(result.get("LineNo").getIntValue())
+                .setInvoiceTime(result.get("InvoiceTime").toString())
+                .setStoreID(result.get("StoreID").getIntValue())
+                .setTransactionID(result.get("TransactionID").toString())
+                .build();
+
+        writer.setSyncOnFlush(true);
+        writer.open(fs, path);
+        writer.write(new Tuple2<String, Object>(key, tx));
+        writer.flush();
+    }
 }

@@ -115,7 +115,7 @@ public class StreamingJob {
                                 .setInvoiceTime(result.get("InvoiceTime").toString())
                                 .setStoreID(result.get("StoreID").intValue())
                                 .setTransactionID(result.get("TransactionID").toString())
-                                .build();;
+                                .build();
 
                         return new Tuple2(value.get("key").toString(), tx);
                     }
