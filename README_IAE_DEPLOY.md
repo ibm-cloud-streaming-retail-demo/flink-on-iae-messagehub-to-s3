@@ -186,7 +186,9 @@ Should we deploy as flink session or standalone with yarn-cluster? What are the 
 
 ### Debugging S3 issues
 
+```
 echo 'log4j.logger.org.apache.hadoop.fs.s3a=DEBUG' >> flink-1.4.0/conf/log4j.properties
 echo 'log4j.logger.org.apache.hadoop.fs.s3a=DEBUG' >> flink-1.4.0/conf/log4j-cli.properties
 echo 'log4j.logger.org.apache.hadoop.fs.s3a=DEBUG' >> flink-1.4.0/conf/log4j-console.properties
 echo 'log4j.logger.org.apache.hadoop.fs.s3a=DEBUG' >> flink-1.4.0/conf/log4j-yarn-session.properties
+```
