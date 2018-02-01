@@ -127,6 +127,10 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
     # Is this ok? https://stackoverflow.com/questions/48505970/flink-on-yarn-could-not-initialize-class-org-apache-hadoop-fs-s3a-s3afilesyste
     rm -f flink-1.4.0/lib/flink-shaded-hadoop2-uber-1.4.0.jar
     
+### Option 1 - Deploy Flink job - yarn session
+
+    source vars.sh
+    
     ### Start Flink session
 
     # For more information, see: https://ci.apache.org/projects/flink/flink-docs-release-1.4/ops/deployment/yarn_setup.html
@@ -141,12 +145,6 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
 
     # View the Flink session running on yarn
     yarn application -list
-
-### Deploy Flink job - yarn session
-
-    source vars.sh
-
-    export HADOOP_CONF_DIR=/etc/hadoop/conf
 
     # For more information, on running flink on yarn, 
     # see: https://ci.apache.org/projects/flink/flink-docs-release-1.4/ops/deployment/yarn_setup.html
@@ -163,7 +161,7 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
     # Verify the output
     hadoop fs -ls cos://${S3_BUCKET}.${S3_SERVICENAME}/${S3_FOLDER}
 
-### Deploy Flink job - yarn single job
+### Option 2 - Deploy Flink job - yarn single job
 
     source vars.sh
 
