@@ -66,6 +66,7 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
 
 ### Open SSH session
 
+    ssh-copy-id clsadmin@your-cluster-name
     ssh clsadmin@your-cluster-name
     
 ### Set variables
