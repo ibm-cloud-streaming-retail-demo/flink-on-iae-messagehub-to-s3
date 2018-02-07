@@ -5,6 +5,8 @@ set -e
 
 source /home/clsadmin/credentials.sh
 
+AMBARI_PORT=9443
+
 function set_key {
 
   KEY=$1
@@ -12,7 +14,7 @@ function set_key {
 
   /var/lib/ambari-server/resources/scripts/configs.py \
      -a set \
-     -l ${IAE_AMBARI_HOSTNAME} -t 9443 -s https \
+     -l ${IAE_AMBARI_HOSTNAME} -t ${AMBARI_PORT} -s https \
      -n AnalyticsEngine -c core-site \
      -u ${IAE_USERNAME} -p ${IAE_PASSWORD} \
      -k $KEY \
@@ -32,4 +34,9 @@ CLUSTER_NAME=AnalyticsEngine
 curl -v --user $IAE_USERNAME:$IAE_PASSWORD -H "X-Requested-By: ambari" -i -X PUT \
      -d '{"RequestInfo": {"context": "Stop All Services via REST"}, "ServiceInfo": {"state":"INSTALLED"}}' https://${IAE_AMBARI_HOSTNAME}:9443/api/v1/clusters/${CLUSTER_NAME}/services
 
-python ./verify_ambari_services.py
+python ./verify_ambari_services.py \
+	$IAE_AMBARI_HOSTNAME \
+	$AMBARI_PORT \
+	$IAE_AMBARI_USERNAME \
+	$IAE_AMBARI_PASSWORD \
+	$CLUSTER_NAME
