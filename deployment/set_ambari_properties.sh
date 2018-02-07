@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+
 
 # Quit on errors
 set -e
@@ -40,6 +40,6 @@ curl -v --user $IAE_USERNAME:$IAE_PASSWORD -H "X-Requested-By: ambari" -i -X PUT
 python ./verify_ambari_services.py \
 	$IAE_AMBARI_HOSTNAME \
 	$AMBARI_PORT \
-	$IAE_AMBARI_USERNAME \
-	$IAE_AMBARI_PASSWORD \
+	$IAE_USERNAME \
+	$IAE_PASSWORD \
 	$CLUSTER_NAME
