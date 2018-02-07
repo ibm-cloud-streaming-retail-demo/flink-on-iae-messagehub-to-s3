@@ -59,6 +59,8 @@ Now edit /home/clsadmin/credentials.sh to reflect your environment
 Wait for script to finish - this could take 20 minutes or more
 
     # Deploy Flink job - yarn single job
+    
+    FLINK_HOME=/home/wce/clsadmin/flink-on-iae-messagehub-to-s3/deployment/flink-1.4.0
 
     source /home/clsadmin/credentials.sh
 
