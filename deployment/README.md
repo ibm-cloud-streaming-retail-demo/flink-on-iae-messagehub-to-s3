@@ -53,6 +53,9 @@ Now edit /home/clsadmin/credentials.sh to reflect your environment
     # run the script to set the cos and s3 properties
     ./set_ambari_properties
     
+    sh ./install_flink.sh
+    sh ./download_dependencies.sh
+    
 Wait for script to finish - this could take 20 minutes or more
 
     # Deploy Flink job - yarn single job
