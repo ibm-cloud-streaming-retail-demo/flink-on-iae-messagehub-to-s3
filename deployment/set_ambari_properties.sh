@@ -32,4 +32,4 @@ CLUSTER_NAME=AnalyticsEngine
 curl -v --user $IAE_USERNAME:$IAE_PASSWORD -H "X-Requested-By: ambari" -i -X PUT \
      -d '{"RequestInfo": {"context": "Stop All Services via REST"}, "ServiceInfo": {"state":"INSTALLED"}}' https://${IAE_AMBARI_HOSTNAME}:9443/api/v1/clusters/${CLUSTER_NAME}/services
 
-python ./verify_amabari_services.py
+python ./verify_ambari_services.py
