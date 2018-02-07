@@ -1,9 +1,12 @@
 #!/usr/bin/bash
 
-set -u
+# Quit on errors
 set -e
 
 source /home/clsadmin/credentials.sh
+
+# Throw error if undefined variable encountered
+set -u
 
 AMBARI_PORT=9443
 
