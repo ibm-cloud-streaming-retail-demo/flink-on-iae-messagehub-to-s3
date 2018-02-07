@@ -63,8 +63,11 @@ Wait for script to finish - this could take 20 minutes or more
     source /home/clsadmin/credentials.sh
 
     export HADOOP_CONF_DIR=/etc/hadoop/conf
+    
+    YARN_BACKGROUND=""
+    #YARN_BACKGROUND="-yd"
 
-    ${FLINK_HOME}/bin/flink run -m yarn-cluster -yn 2 -yd /home/clsadmin/messagehub-to-s3-1.0-SNAPSHOT.jar \
+    ${FLINK_HOME}/bin/flink run -m yarn-cluster -yn 2 $YARN_BACKGROUND /home/clsadmin/messagehub-to-s3-1.0-SNAPSHOT.jar \
       --kafka-brokers ${KAFKA_BROKERS} \
       --kafka-topic ${KAFKA_TOPIC} \
       --kafka-username ${KAFKA_USERNAME} \
