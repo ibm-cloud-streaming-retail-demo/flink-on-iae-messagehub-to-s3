@@ -24,13 +24,13 @@ function set_key {
      -v $VAL                  
  }  
 
-set_key "fs.cos.${S3_SERVICENAME}.access.key", "${S3_ACCESS_KEY}"
-set_key "fs.cos.${S3_SERVICENAME}.secret.key", "${S3_SECRET_KEY}"
-set_key "fs.cos.${S3_SERVICENAME}.endpoint",   "${S3_ENDPOINT}"
-set_key "fs.s3a.access.key",                   "${S3_ACCESS_KEY}"
-set_key "fs.s3a.secret.key",                   "${S3_SECRET_KEY}"
-set_key "fs.s3a.endpoint",                     "${S3_ENDPOINT}"
-set_key "fs.s3.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem"
+set_key "fs.cos.${S3_SERVICENAME}.access.key" "${S3_ACCESS_KEY}"
+set_key "fs.cos.${S3_SERVICENAME}.secret.key" "${S3_SECRET_KEY}"
+set_key "fs.cos.${S3_SERVICENAME}.endpoint"   "${S3_ENDPOINT}"
+set_key "fs.s3a.access.key"                   "${S3_ACCESS_KEY}"
+set_key "fs.s3a.secret.key"                   "${S3_SECRET_KEY}"
+set_key "fs.s3a.endpoint"                     "${S3_ENDPOINT}"
+set_key "fs.s3.impl" "org.apache.hadoop.fs.s3a.S3AFileSystem"
 
 CLUSTER_NAME=AnalyticsEngine
 
