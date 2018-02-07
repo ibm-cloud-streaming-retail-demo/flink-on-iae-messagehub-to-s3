@@ -30,14 +30,18 @@ Use the following steps to create a service credential:
 
 ### Build the application jar file
 
+    # RECOMMENDED: 
+    # Copy your ssh key to the cluster this will prevent you from having to enter credentials when using ssh/scp
+    ssh-copy-id clsadmin@${IAE_SSH_HOSTNAME}
+
     mvn clean install -Pbuild-jar
     
     # Upload application jar to server
-    scp ./target/messagehub-to-s3-1.0-SNAPSHOT.jar clsadmin@your-cluster-hostname:/home/clsadmin/
+    scp ./target/messagehub-to-s3-1.0-SNAPSHOT.jar clsadmin@${IAE_SSH_HOSTNAME}:/home/clsadmin/
 
 ### Cluster steps
 
-    ssh clsadmin@$your-cluster-hostname
+    ssh clsadmin@${IAE_SSH_HOSTNAME}
     
     git clone https://github.com/ibm-cloud-streaming-retail-demo/flink-on-iae-messagehub-to-s3
     cd deployment
