@@ -44,11 +44,12 @@ Use the following steps to create a service credential:
     
     cp credentials.sh_template /home/clsadmin/credentials.sh
     
-    # edit /home/clsadmin/credentials.sh
+Now edit /home/clsadmin/credentials.sh to reflect your environment
    
+    # run the script to set the cos and s3 properties
     ./set_ambari_properties
     
-    # wait for script to finish - this could take 20 minutes or more
+Wait for script to finish - this could take 20 minutes or more
 
     # Deploy Flink job - yarn single job
 
