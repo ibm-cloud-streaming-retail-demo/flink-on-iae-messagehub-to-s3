@@ -51,9 +51,15 @@ Use the following steps to create a service credential:
 Now edit /home/clsadmin/credentials.sh to reflect your environment
    
     # run the script to set the cos and s3 properties
-    ./set_ambari_properties
+    sh ./set_ambari_properties.sh
     
+    # install flink
     sh ./install_flink.sh
+    
+    # set s3 credentials - is this required, creds are in core-site.xml
+    #sh ./configure_flink.sh
+    
+    # download hadoop-aws jars for s3
     sh ./download_dependencies.sh
     
 Wait for script to finish - this could take 20 minutes or more
