@@ -17,13 +17,14 @@ cat << EOF > ivysettings.xml
     <caches  defaultCacheDir="${TMPDIR}" />
     <resolvers>
         <chain name="chain">
+            <ibiblio name="example" m2compatible="true" root="http://repo.hortonworks.com/content/repositories/releases"/>
             <ibiblio name="central" m2compatible="true"/>
         </chain>
     </resolvers>
 </ivysettings>
 EOF
 
-java -jar apache-ivy-2.4.0/ivy-2.4.0.jar -settings ivysettings.xml -notransitive -dependency org.apache.hadoop hadoop-aws 2.7.3
+java -jar apache-ivy-2.4.0/ivy-2.4.0.jar -settings ivysettings.xml -notransitive -dependency org.apache.hadoop hadoop-aws 2.7.3.2.6.2.0-205
 java -jar apache-ivy-2.4.0/ivy-2.4.0.jar -settings ivysettings.xml -notransitive -dependency com.amazonaws aws-java-sdk-s3 1.11.183
 java -jar apache-ivy-2.4.0/ivy-2.4.0.jar -settings ivysettings.xml -notransitive -dependency com.amazonaws aws-java-sdk-core 1.11.183
 java -jar apache-ivy-2.4.0/ivy-2.4.0.jar -settings ivysettings.xml -notransitive -dependency com.amazonaws aws-java-sdk-kms 1.11.183
