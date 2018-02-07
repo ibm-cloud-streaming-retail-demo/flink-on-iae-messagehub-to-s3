@@ -78,30 +78,37 @@ Create a file `credentials.sh` on your local machine:
     
 ### Configure IAE for COS
 
-These instructions are taken from the [IAE docs](https://console.bluemix.net/docs/services/AnalyticsEngine/configure-COS-S3-object-storage.html#configuring-clusters-to-work-with-ibm-cos-s3-object-stores).
+    ssh clsadmin@${IAE_HOSTNAME} bash -c "'
+    source /home/clsadmin/credentials.sh
 
- - Open the Ambari console, and then the advanced configuration for HDFS.
- - Ambari dashboard > HDFS > Configs > Advanced > Custom core-site > Add Property
- - Add the properties and values.
+    function set_key {
+
+      KEY=$1
+      VAL=$2
+
+      /var/lib/ambari-server/resources/scripts/configs.py \
+         -a set \
+         -l ${IAE_AMBARI_HOSTNAME} -t 9443 -s https \
+         -n AnalyticsEngine -c core-site \
+         -u ${IAE_USERNAME} -p ${IAE_PASSWORD} \
+         -k $KEY \
+         -v $VAL                  
+     }  
+
+    set_key "fs.cos.${S3_SERVICENAME}.access.key", "${S3_ACCESS_KEY}"
+    set_key "fs.cos.${S3_SERVICENAME}.secret.key", "${S3_SECRET_KEY}"
+    set_key "fs.cos.${S3_SERVICENAME}.endpoint",   "${S3_ENDPOINT}"
+    set_key "fs.s3a.access.key",                   "${S3_ACCESS_KEY}"
+    set_key "fs.s3a.secret.key",                   "${S3_SECRET_KEY}"
+    set_key "fs.s3a.endpoint",                     "${S3_ENDPOINT}"
+    set_key "fs.s3.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem"
+    
+    CLUSTER_NAME=AnalyticsEngine
+    
+    curl -v --user $IAE_USERNAME:$IAE_PASSWORD -H "X-Requested-By: ambari" -i -X PUT -d '{"RequestInfo": {"context": "Stop All Services via REST"}, "ServiceInfo": {"state":"INSTALLED"}}' https://${IAE_AMBARI_HOSTNAME}:9443/api/v1/clusters/${CLUSTER_NAME}/services
+
+    '"
  
- Note that the value for <servicename> can be any literal such as `myobjectstore`.
-
-```
-fs.cos.<servicename>.access.key=<Access Key ID>
-fs.cos.<servicename>.secret.key=<Secret Access Key>
-fs.cos.<servicename>.endpoint=<EndPoint URL>
-
-# Also, in addition to the IAE documentation instructions, we need to set up to access S3 urls which are used by Flink
-
-fs.s3a.access.key=<Access Key ID>
-fs.s3a.secret.key=<Secret Access Key>
-fs.s3a.endpoint=<EndPoint URL>
-
-# Finally, Flink requires the fs.s3.impl variable to be set:
-
-fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
-```
-
  - Save your changes and restart any affected services. The cluster will have access to your object store.
  
 ### Build the application jar file
