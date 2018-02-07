@@ -28,6 +28,54 @@ Use the following steps to create a service credential:
  - The endpoint can be found by going to the side navigation, click Endpoint
  - select the **private** endpoint for your location.
 
+### Define environment variables
+
+Create a file `credentials.sh` on your local machine:
+
+    ############################
+    ### Set custom variables ###
+    ############################
+    
+    export IAE_HOSTNAME=changeme
+    export IAE_USERNAME=clsamdmin
+    export IAE_PASSWORD=changeme
+
+    export S3_ACCESS_KEY=your-access-key
+    export S3_SECRET_KEY=your-secret-key
+    export S3_ENDPOINT=your-endpoint
+    export S3_BUCKET=your-bucket
+    export S3_FOLDER=your-folder
+    
+    export S3_BUCKET_FORMAT_STRING="yyyy-MM-dd--HHmm"
+    
+    # your-servicename as configured in IAE Ambari
+    export S3_SERVICENAME=your-servicename
+    
+    # Format host1:port1,host2:port2,...,hostN:portN
+    export KAFKA_BROKERS=your-brokers
+    
+    export KAFKA_TOPIC=transactions_load
+    export KAFKA_USERNAME=your-kafka-username
+    export KAFKA_PASSWORD=your-kafka-password
+    export KAFKA_GROUP_ID=kafka-flink-iae-streaming-demo
+    
+    export FLINK_HOME=flink-1.4.0
+    export FLINK_LIB=$FLINK_HOME/lib/
+    export FLINK_CONF=$FLINK_HOME/conf/flink-conf.yaml
+    
+ After editing, 
+ 
+    # import it into your local terminal session
+    source credentials.sh
+    
+    # RECOMMENDED: copy your ssh key to the cluster
+    # this will prevent you from having to enter credentials
+    # when using ssh/scp
+    ssh-copy-id clsadmin@${IAE_HOSTNAME}
+    
+    # copy credentials file to the cluster
+    scp credentials.sh clsadmin@${IAE_HOSTNAME}:/home/clsadmin/
+    
 ### Configure IAE for COS
 
 These instructions are taken from the [IAE docs](https://console.bluemix.net/docs/services/AnalyticsEngine/configure-COS-S3-object-storage.html#configuring-clusters-to-work-with-ibm-cos-s3-object-stores).
@@ -62,44 +110,12 @@ fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
     
 ### Upload application jar to server
 
-    scp ./target/messagehub-to-s3-1.0-SNAPSHOT.jar clsadmin@your-cluster-name:/home/clsadmin/
+    scp ./target/messagehub-to-s3-1.0-SNAPSHOT.jar clsadmin@${IAE_HOSTNAME}:/home/clsadmin/
 
 ### Open SSH session
 
-    ssh-copy-id clsadmin@your-cluster-name
-    ssh clsadmin@your-cluster-name
-    
-### Set variables
-
-    # Create a file vars.sh
-
-    ############################
-    ### Set custom variables ###
-    ############################
-
-    export S3_ACCESS_KEY=your-access-key
-    export S3_SECRET_KEY=your-secret-key
-    export S3_ENDPOINT=your-endpoint
-    export S3_BUCKET=your-bucket
-    export S3_FOLDER=your-folder
-    
-    export S3_BUCKET_FORMAT_STRING="yyyy-MM-dd--HHmm"
-    
-    # your-servicename as configured in IAE Ambari
-    export S3_SERVICENAME=your-servicename
-    
-    # Format host1:port1,host2:port2,...,hostN:portN
-    export KAFKA_BROKERS=your-brokers
-    
-    export KAFKA_TOPIC=transactions_load
-    export KAFKA_USERNAME=your-kafka-username
-    export KAFKA_PASSWORD=your-kafka-password
-    export KAFKA_GROUP_ID=kafka-flink-iae-streaming-demo
-    
-    export FLINK_HOME=flink-1.4.0
-    export FLINK_LIB=$FLINK_HOME/lib/
-    export FLINK_CONF=$FLINK_HOME/conf/flink-conf.yaml
-
+    ssh clsadmin@${IAE_HOSTNAME}
+   
 ### Install Flink
 
     #####################
