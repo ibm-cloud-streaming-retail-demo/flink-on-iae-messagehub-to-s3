@@ -3,7 +3,7 @@
 # abort on error
 set -e
 
-FLINK_HOME=${pwd}/flink-1.4.0
+FLINK_HOME=$(pwd)/flink-1.4.0
 
 # Download Flink - IAE as of 2018-01-29 is based on hadoop 2.7
 wget -c -O flink-1.4.0-hadoop27-scala_2.11.tgz \
