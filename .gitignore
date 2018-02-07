@@ -26,3 +26,4 @@ target/
 run_flink.sh
 run_flink_job.sh
 dependency-reduced-pom.xml
+credentials.sh
