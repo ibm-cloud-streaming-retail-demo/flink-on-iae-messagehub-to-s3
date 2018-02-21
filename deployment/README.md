@@ -44,7 +44,7 @@ Use the following steps to create a service credential:
     ssh clsadmin@${IAE_SSH_HOSTNAME}
     
     git clone https://github.com/ibm-cloud-streaming-retail-demo/flink-on-iae-messagehub-to-s3
-    cd deployment
+    cd flink-on-iae-messagehub-to-s3/deployment
     
     cp credentials.sh_template /home/clsadmin/credentials.sh
     
