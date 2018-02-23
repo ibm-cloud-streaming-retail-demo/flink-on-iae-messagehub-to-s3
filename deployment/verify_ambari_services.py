@@ -38,6 +38,7 @@ while True:
         state = j['state']
 
         if service_name not in ['SQOOP', 'SLIDER', 'TEZ', 'PIG']:
+            print(service_name + ' ' + state)
             if state != 'STARTED':
                 continue
 
